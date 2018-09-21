@@ -37,10 +37,17 @@ public class LonelyTwitterActivity extends Activity {
 		saveButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				setResult(RESULT_OK);
+//				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
+
+				ImportantTweet importantTweet = new ImportantTweet();
+				try{
+					importantTweet.setMessage(text);
+				}catch(TooLongTweetException e){
+				}
+
 				saveInFile(text, new Date(System.currentTimeMillis()));
-				finish();
+				//finish();
 
 			}
 		});
@@ -51,6 +58,8 @@ public class LonelyTwitterActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onStart();
 		String[] tweets = loadFromFile();
+
+		//these 3 lines are really imp // try to understand
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, tweets);
 		oldTweetsList.setAdapter(adapter);
